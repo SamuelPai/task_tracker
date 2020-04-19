@@ -15,6 +15,9 @@ app.get("*", function(req, res) {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 })
 
+const routes = require("./controllers/taskController");
+app.use(routes);
+
 app.listen(PORT, () => {
     console.log("Your API server is now on PORT:", PORT);
 })

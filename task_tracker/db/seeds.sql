@@ -1,0 +1,1 @@
+INSERT INTO tasks (task) values("Take out the trash"),("Make the bed"),("Practice piano"),("Study python functions")

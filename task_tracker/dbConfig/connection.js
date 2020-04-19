@@ -1,4 +1,6 @@
 const mysql = require("mysql");
+const keys = require("./keys")
+require('dotenv').config()
 
 const connection = mysql.createConnection(
     {
