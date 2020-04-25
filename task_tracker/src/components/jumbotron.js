@@ -14,6 +14,7 @@ export default function Jumbotron() {
                     </header>
                     <hr></hr>
                     <TaskInput />
+                   
                 </div>
             </Col>
 
