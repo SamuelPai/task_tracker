@@ -3,6 +3,13 @@ const app = express();
 const path = require("path");
 const PORT = process.env.PORT || 3000;
 const db = require("./models");
+const cors = require('cors')
+
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200,
+  }
+app.use(cors(corsOptions)) 
 
 app.use(express.static(path.join(__dirname, "build")));
 app.use(express.urlencoded({ extended: true }));

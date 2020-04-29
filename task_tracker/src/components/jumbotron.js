@@ -10,7 +10,7 @@ export default function Jumbotron() {
             <Col md={8}>
                 <div style={jumboStyle} class="jumbotron">
                     <header style={{ display: "flex", justifyContent: "center" }}>
-                        <h1>Sam's Task Tracker</h1>
+                        <h1>Sam's Task Motivator</h1>
                     </header>
                     <hr></hr>
                     <TaskInput />
