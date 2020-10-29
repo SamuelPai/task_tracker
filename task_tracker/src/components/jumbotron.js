@@ -26,6 +26,8 @@ export default function Jumbotron() {
 
 var jumboStyle = {
     marginTop: "50px",
-    height: "300%",
-    backgroundColor: "dark-grey"
+    height: "100%",
+    backgroundColor: "lightBlue"
 }
+
+
