@@ -25,6 +25,10 @@ export default class TaskInput extends Component {
         window.location.reload();
     }
 
+    handleTaskEdit = () => {
+        console.log("edit button worked")
+    }
+
     submitHandler = (event) => {
         event.preventDefault() //to prevent page refresh
         console.log()
@@ -60,6 +64,8 @@ export default class TaskInput extends Component {
     }
 
     render() {
+        // const { task, allTasks } = this.state; //destructuring the state
+        
         return (
             <div>
                 <form onSubmit={this.submitHandler} >
@@ -71,7 +77,10 @@ export default class TaskInput extends Component {
                 <br></br>
                 <ul>
                     {this.state.allTasks.map(task => (
-                        <li>{task.task}<button onClick = {() => this.handleDelete(task.id)}>x</button></li>
+                        <li style={{fontFamily:"garamond", fontSize:"25px", margin:"10px"}} className="tasks">{task.task}
+                            <button className="btn m-1 btn-danger btn-xs" onClick={() => this.handleDelete(task.id)}>x</button>
+                            <button className="btn btn-info btn-xs" onClick={this.handleTaskEdit}><i class="fa fa-pencil" style={{fontSize:"8px"}}></i></button>
+                        </li>
                     )
                     )}
                 </ul>
