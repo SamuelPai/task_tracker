@@ -1,7 +1,7 @@
 
 const db = require("../models");
 
-module.exports = function(router) {
+module.exports = function (router) {
 
     router.get("/api/tasks", (req, res) => {
         db.Task.findAll({}).then(data => {
@@ -20,19 +20,21 @@ module.exports = function(router) {
 
     router.delete("/api/task/:id", (req, res) => {
         db.Task.findByPk(req.params.id)
-        .then(task => task.destroy())
-        .then(task => res.json(task))
-        .catch(err => res.status(422).json(err))
+            .then(task => task.destroy())
+            .then(task => res.json(task))
+            .catch(err => res.status(422).json(err))
     })
 
     router.put("/api/task", (req, res) => {
         db.Task.update({
             task: req.body.task,
             completed: req.body.complete
-        }), {
-            where: {id:req.body.id}
-        }
-    }).then(res => {
-        res.json(res)
+        }, {
+                where: {
+                    id: req.body.id
+                }
+            }).then(response => {
+                res.json(response)
+            })
     })
 }
