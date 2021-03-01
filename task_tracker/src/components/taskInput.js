@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import {useAuth0, withAuthenticationRequired} from "@auth0/auth0-react";
 
 export default class TaskInput extends Component {
     constructor(props) {
@@ -50,22 +51,38 @@ export default class TaskInput extends Component {
         })
         window.location.reload()
     }
-
+   
+  
+    
+  
     componentDidMount() {
-        console.log("component did mount")
+        
+        const getProtectedTasks = async () => {
+           
+            try {
+                const token = "testing"
+                const self = this;
+                let response = await axios.get("/api/tasks", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                self.setState({
+                    allTasks: response.data
+                })
 
-        const self = this;
-        axios.get("/api/tasks").then(function (data) {
-            self.setState({
-                allTasks: data.data
-            })
-            // console.log(self.state.allTasks[0].task)
-        })
+            } catch {
+
+            }
+        }
+        getProtectedTasks()
+
     }
 
     render() {
         // const { task, allTasks } = this.state; //destructuring the state
         
+
         return (
             <div>
                 <form onSubmit={this.submitHandler} >
@@ -77,9 +94,9 @@ export default class TaskInput extends Component {
                 <br></br>
                 <ul>
                     {this.state.allTasks.map(task => (
-                        <li style={{fontFamily:"garamond", fontSize:"25px", margin:"10px"}} className="tasks">{task.task}
+                        <li style={{ fontFamily: "garamond", fontSize: "25px", margin: "10px" }} className="tasks">{task.task}
                             <button className="btn m-1 btn-danger btn-xs" onClick={() => this.handleDelete(task.id)}>x</button>
-                            <button className="btn btn-info btn-xs" onClick={this.handleTaskEdit}><i class="fa fa-pencil" style={{fontSize:"8px"}}></i></button>
+                            <button className="btn btn-info btn-xs" onClick={this.handleTaskEdit}><i class="fa fa-pencil" style={{ fontSize: "8px" }}></i></button>
                         </li>
                     )
                     )}

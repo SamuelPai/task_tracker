@@ -1,10 +1,12 @@
-import React from 'react'
-import "./navbar.css"
+import React from 'react';
+import "./navbar.css";
+import LogoutButton from "./Auth0/logoutBtn";
 
 export default function Navbar() {
     return (
+        <React.Fragment>
         <div>
-            <nav style={{width:"102%"}} class="navbar navbar-expand-lg navbar-light bg-dark">
+            <nav style={{ width: "102%" }} class="navbar navbar-expand-lg navbar-light bg-dark">
                 <a style={navStyle} class="navbar-brand"> Task Tracker</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,13 +22,20 @@ export default function Navbar() {
                         <li class="nav-item">
                             <a id="navTitle3" class="nav-link navTitle" href="#">Ongoing</a>
                         </li>
+                        <li class="nav-item">
+                            <a id="profile" class="nav-link navTitle" href="/profile">Profile</a>
+                        </li>
+
                     </ul>
                     <span class="navbar-text">
-                        
-    </span>
+
+                    </span>
                 </div>
             </nav>
         </div>
+        <LogoutButton />
+        </React.Fragment>
+
     )
 }
 
