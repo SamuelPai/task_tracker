@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import {withAuth0} from "@auth0/auth0-react";
+import config from "../auth_config.json";
+const {apiOrigin = "http://localhost:3001"} = config
 
-export default class TaskInput extends Component {
+class TaskInput extends Component {
     constructor(props) {
         super(props)
-
+        
         this.state = {
             task: " ",
             allTasks: []
@@ -50,22 +53,36 @@ export default class TaskInput extends Component {
         })
         window.location.reload()
     }
+   
 
     componentDidMount() {
-        console.log("component did mount")
+        const getProtectedTasks = async () => {
+            const {getAccessTokenSilently} = this.props.auth0;
+            const accessToken = await getAccessTokenSilently();
+            try {
+                const token = accessToken;
+                const self = this;
+                const response = await axios.get(`${apiOrigin}/api/tasks`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                self.setState({
+                    allTasks: response.data
+                })
 
-        const self = this;
-        axios.get("/api/tasks").then(function (data) {
-            self.setState({
-                allTasks: data.data
-            })
-            // console.log(self.state.allTasks[0].task)
-        })
+            } catch {
+
+            }
+        }
+        getProtectedTasks()
+
     }
 
     render() {
         // const { task, allTasks } = this.state; //destructuring the state
         
+
         return (
             <div>
                 <form onSubmit={this.submitHandler} >
@@ -77,9 +94,9 @@ export default class TaskInput extends Component {
                 <br></br>
                 <ul>
                     {this.state.allTasks.map(task => (
-                        <li style={{fontFamily:"garamond", fontSize:"25px", margin:"10px"}} className="tasks">{task.task}
+                        <li style={{ fontFamily: "garamond", fontSize: "25px", margin: "10px" }} className="tasks">{task.task}
                             <button className="btn m-1 btn-danger btn-xs" onClick={() => this.handleDelete(task.id)}>x</button>
-                            <button className="btn btn-info btn-xs" onClick={this.handleTaskEdit}><i class="fa fa-pencil" style={{fontSize:"8px"}}></i></button>
+                            <button className="btn btn-info btn-xs" onClick={this.handleTaskEdit}><i class="fa fa-pencil" style={{ fontSize: "8px" }}></i></button>
                         </li>
                     )
                     )}
@@ -88,3 +105,5 @@ export default class TaskInput extends Component {
         )
     }
 }
+
+export default withAuth0(TaskInput);

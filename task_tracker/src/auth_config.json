@@ -1,0 +1,5 @@
+{
+    "domain": "task-motivator.us.auth0.com",
+    "clientId": "603c3a5c435604003da2d90a",
+    "audience": "https://quickstarts/api"
+}

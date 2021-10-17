@@ -6,7 +6,13 @@ import * as serviceWorker from './serviceWorker';
 import { Auth0Provider } from '@auth0/auth0-react';
 
 ReactDOM.render(
-  <Auth0Provider>
+  <Auth0Provider 
+  domain="task-motivator.us.auth0.com"
+  clientId="kxviTQGErwGaBkPt7KQEekwhlm7fws9C"
+  redirectUri={'http://localhost:3001/tasks'}
+  audience="https://quickstarts/api"
+  scope="read:current_user update:current_user_metadata"
+  >
     <React.StrictMode>
       <App />
     </React.StrictMode>
