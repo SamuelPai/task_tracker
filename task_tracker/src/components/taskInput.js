@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import {useAuth0, withAuthenticationRequired} from "@auth0/auth0-react";
+import {withAuth0} from "@auth0/auth0-react";
+import config from "../auth_config.json";
+const {apiOrigin = "http://localhost:3001"} = config
 
-export default class TaskInput extends Component {
+class TaskInput extends Component {
     constructor(props) {
         super(props)
-
+        
         this.state = {
             task: " ",
             allTasks: []
@@ -52,17 +54,15 @@ export default class TaskInput extends Component {
         window.location.reload()
     }
    
-  
-    
-  
+
     componentDidMount() {
-        
         const getProtectedTasks = async () => {
-           
+            const {getAccessTokenSilently} = this.props.auth0;
+            const accessToken = await getAccessTokenSilently();
             try {
-                const token = "testing"
+                const token = accessToken;
                 const self = this;
-                let response = await axios.get("/api/tasks", {
+                const response = await axios.get(`${apiOrigin}/api/tasks`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -105,3 +105,5 @@ export default class TaskInput extends Component {
         )
     }
 }
+
+export default withAuth0(TaskInput);
