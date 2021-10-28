@@ -1,9 +1,21 @@
-
 const db = require("../models");
+const jwt = require("express-jwt");
+const jwksRsa = require("jwks-rsa");
 
 module.exports = function (router) {
+    const authorizeAccessToken = jwt({
+        secret: jwksRsa.expressJwtSecret({
+            cache:true,
+            rateLimit:true,
+            jwksRequestsPerMinute:5,
+            jwksUri: `https://task-motivator.us.auth0.com/.well-known/jwks.json`
+        }),
+        audience: "https://quickstarts/api",
+        issuer: "https://task-motivator.us.auth0.com",
+        algorithms: ["RS256"]
+    });
 
-    router.get("/api/tasks", (req, res) => {
+    router.get("/api/tasks", authorizeAccessToken, (req, res) => {
         db.Task.findAll({}).then(data => {
             res.json(data);
         });
